@@ -5,18 +5,48 @@
 class Trainer
 {
     public:
-        virtual std::shared_ptr<Optimizer> getOptimizer() = 0;
-        virtual std::shared_ptr<Network> getNetwork() = 0;
+        void setOptimizer(std::string config);
+        void setNetwork(std::string config);
+        std::string getOptimizer();
+        std::string getNetwork();
+    private:
+        std::shared_ptr<Optimizer> optimizer_;
+        std::shared_ptr<Network> network_;
 
 };
 
-class ClassifierTrainer: public Trainer
+class TrainerBuilder
 {
     public:
-        std::shared_ptr<Optimizer> getOptimizer() override{
-            return std::make_shared<SGD>();
+        Trainer buildTrainer(std::string config){
+            this->setOptimizer("SGD");
+            this->setNetwork(config);
+            return this->trainer_;
         }
-        std::shared_ptr<Network> getNetwork() override{
-            return std::make_shared<ConvolutionNN>();
-        }
+        void setOptimizer(std::string config);
+        void setNetwork(std::string config);
+    protected:
+        Trainer trainer_;
 };
+
+// class CVTrainer: public Trainer
+// {
+//     public:
+//         std::shared_ptr<Optimizer> getOptimizer() override{
+//             return std::make_shared<SGD>();
+//         }
+//         std::shared_ptr<Network> getNetwork() override{
+//             return std::make_shared<ConvolutionNN>();
+//         }
+// };
+
+// class NLPTrainer: public Trainer
+// {
+//     public:
+//         std::shared_ptr<Optimizer> getOptimizer() override{
+//             return std::make_shared<SGD>();
+//         }
+//         std::shared_ptr<Network> getNetwork() override{
+//             return std::make_shared<RecurrentNN>();
+//         }
+// };

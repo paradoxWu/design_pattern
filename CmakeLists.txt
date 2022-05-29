@@ -28,16 +28,16 @@ include_directories(./include)
 ## 这里一般都是外部依赖的库 例如opencv gtest等
 # link_libraries()
 
-# FILE(GLOB_RECURSE SRC src/*.cpp)
+FILE(GLOB_RECURSE SRC src/*.cpp)
 
 #生成库文件 SHARED 为.so 动态文件 STATIC 为.a静态文件
-# add_library(factory STATIC ${SRC})
+add_library(creator STATIC ${SRC})
 
 # g++ xxx.cpp -o xxx
 add_executable(${PROJECT_NAME} main.cpp)
 
 ## 这里相当于 g++ -l，一般都是自己所写成的库文件从上面add_library得到
-# target_link_libraries(${PROJECT_NAME} factory)
+target_link_libraries(${PROJECT_NAME} creator)
 
 
 IF(BUILD_SAMPLES)
@@ -50,5 +50,5 @@ ENDIF()
 #         CUDA_SEPARABLE_COMPILATION ON)
 
 # CMAKE_INSTALL_PREFIX的默认定义是/usr/local,可以自己设置
-# INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/lib DESTINATION install)
+INSTALL(DIRECTORY ${CMAKE_SOURCE_DIR}/lib DESTINATION install)
 INSTALL(TARGETS ${PROJECT_NAME} DESTINATION install)
